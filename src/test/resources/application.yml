@@ -1,0 +1,16 @@
+# this file is needed to run tests using the command: mvn test
+spring:
+  kafka:
+    consumer:
+      group-id: tpd-loggers
+      auto-offset-reset: earliest
+    # change this property if you are using your own
+    # Kafka cluster or your Docker IP is different
+    bootstrap-servers: ${spring.embedded.kafka.brokers}
+
+tpd:
+  topic-name: media
+
+topic:
+  receiver: receiver.t
+
