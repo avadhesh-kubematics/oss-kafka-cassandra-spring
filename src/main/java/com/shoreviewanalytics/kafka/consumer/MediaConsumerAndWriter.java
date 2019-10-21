@@ -96,11 +96,11 @@ public class MediaConsumerAndWriter {
             props.put("security.protocol", "SSL");
             props.put("ssl.endpoint.identification.algorithm", "");
             props.put("ssl.truststore.location", "/home/kafka/Downloads/kafka.service/client.truststore.jks");
-            props.put("ssl.truststore.password", "audiovox1");
+            props.put("ssl.truststore.password", "");
             props.put("ssl.keystore.type", "PKCS12");
             props.put("ssl.keystore.location", "/home/kafka/Downloads/kafka.service/client.keystore.p12");
-            props.put("ssl.keystore.password", "audiovox1");
-            props.put("ssl.key.password", "audiovox1");
+            props.put("ssl.keystore.password", "");
+            props.put("ssl.key.password", "");
             props.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArrayDeserializer");
             props.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.connect.json.JsonDeserializer");
             props.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);

@@ -27,7 +27,8 @@ to run use: mvn -Dtest=EmbeddedKafkaTest1 test
 
 /**
  * class EmbeddedKafkaTests:
- * This is an example from the Spring Kafka documentation at the time located at (https://docs.spring.io/spring-kafka/docs/2.3.0.RELEASE/reference/html/#example)
+ * This is an example from the Spring Kafka documentation located at
+ * https://docs.spring.io/spring-kafka/docs/2.3.0.RELEASE/reference/html/#example
  * and uses an embedded instance of kafka, creates a consumer DefaultKafkaConsumerFactory as a listener KafkaMessageListenerContainer,
  * it creates a properties containerProperties that holds additional properties for the consumer and then starts it up.  After the consumer
  * is setup a producer is setup using Map<String, Object> senderProps for the configuration.  First a ProducerFactory is created as pf which is then

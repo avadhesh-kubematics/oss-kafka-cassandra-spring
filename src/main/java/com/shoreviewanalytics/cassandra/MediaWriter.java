@@ -13,7 +13,7 @@ public class MediaWriter {
     private static Logger logger = LoggerFactory.getLogger(MediaWriter.class);
     /*
     This method is not used in the current implementation.  It is leftover for reference. Notice that
-    the dbConnector object has been moved below to a standalone method called session.
+    the dbConnector object has been moved below to a standalone method called cqlSession.
      */
     public void WriteToCassandra(Vector records, CqlSession session) throws Exception {
 

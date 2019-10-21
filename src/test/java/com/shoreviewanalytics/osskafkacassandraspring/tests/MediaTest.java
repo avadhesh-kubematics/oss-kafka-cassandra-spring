@@ -52,10 +52,12 @@ public class MediaTest {
     supporting auto-partition assignment or user-configured assignment. With the latter, initial partition offsets can be provided.
      */
     private KafkaMessageListenerContainer<String, String> container;
-
     private BlockingQueue<ConsumerRecord<String, String>> records;
     private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedKafkaTest2.class);
     @Autowired
+    /*
+    Use the Sender class from the application code to send a test message to Kafka.
+     */
     private com.shoreviewanalytics.kafka.producer.Sender sender;
 
     @ClassRule
