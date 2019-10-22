@@ -1,6 +1,6 @@
 # oss-kafka-cassandra-spring
 
-This application demonstrates how to use Spring Kafka to create a producer and consumer of JSON messages.  The consumer is able to consume messages and simultaneously write them to a data source.   Cassandra is the data source, but the code could be modified to write data to any number of data sources such as MySQL or Postgres.  Some of the instructions below relate specifically to running this application using Kafka and Cassandra as services from [Aiven.io](). However, as I developed this example application, I pointed to a local single-node Kafka cluster and a local three node Cassandra cluster.  
+This application demonstrates how to use Spring Kafka to create a producer and consumer of JSON messages.  The consumer is able to consume messages and simultaneously write them to a data source.   Cassandra is the data source, but the code could be modified to write data to any number of data sources such as MySQL or Postgres.  Some of the instructions below relate specifically to running this application using Kafka and Cassandra as services from [Aiven.io](https://aiven.io/). However, as I developed this example application, I pointed to a local single-node Kafka cluster and a local three node Cassandra cluster.  
 
 ### Prerequisites:
 
