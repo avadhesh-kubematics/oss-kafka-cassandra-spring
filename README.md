@@ -1,26 +1,26 @@
 # oss-kafka-cassandra-spring
 
-An example application that demonstrates how to use Spring Kafka to create a producer and consumer where the consumer is able to consume messages and simultaneously write the consumed records to a data source.  This application uses Cassandra as a data source, but the code can be modified to write data to any number of data sources such as MySQL or Postgres.  The plain Java version can be found [here](https://github.com/shoreviewanalytics/oss-kafka-cassandra).  
+This application demonstrates how to use Spring Kafka to create a producer and consumer of JSON messages.  The consumer is able to consume messages and simultaneously write them to a data source.   Cassandra is the data source, but the code could be modified to write data to any number of data sources such as MySQL or Postgres.  Some of the instructions below relate specifically to running this application using Kafka and Cassandra as services from [Aiven.io](). However, as I developed this example application, I pointed to a local single-node Kafka cluster and a local three node Cassandra cluster.  
 
 ### Prerequisites:
 
-In order to run this example it is necessary to have a Kafka single or multi node cluster as well as Cassandra single node or multi node cluster both with SSL enabled.  It is possible to run without SSL, but it will be necessary to comment out the SSL configuration throughout the application.  
+In order to run this application, it will be necessary to have a Kafka single or multi-node cluster as well as Cassandra single node or multi-node cluster with SSL enabled. It is possible to run without SSL, but it will be necessary to remove or comment out, the SSL configuration throughout the application. The source code uses a .pem file to access a Cassandra cluster using SSL. It also uses a client.truststore and a client.keystore to when accessing an SSL enabled Kafka cluster. 
 
-The source code uses a .pem file to access a Cassandra cluster using SSL.  It also uses a client.truststore and a client.keystore to when accessing an SSL enabled Kafka cluster.  It will be necessary to recompile the  code adding your specific environment values.  For example, the  dbConnector class has a connect() method where you pass in values specific to your environment such as the IP address of your data source. 
+It will be necessary to recompile the project adding your specific environment values. For example, the dbConnector class has a connect() method where you pass in values specific to your environment such as the IP address of your data source.
 
-Please note many of the instructions below relate specifically to running this application using Kafka and Cassandra as services from [Aiven.io]().  However, as I developed this example I pointed the code to a local deploy of a single node Kafka cluster and a local deploy of a three node Cassandra cluster.  
+
 
 ## Setting up Kafka SSL
 
-Use the following commands to create the client.truststore and the client.keystore that allow for a connection using SSL. 
+You can use the following commands to create the client.truststore and the client.keystore that allow for a connection to Kafka using SSL. 
 
 	openssl pkcs12 -export -inkey service.key -in service.cert -out client.keystore.p12 -name service_key
 	
 	keytool -import -file ca.pem -alias CA -keystore client.truststore.jks
 
-Use these newly created files in the ReceiverConfig and SenderConfig classes in the application. 
+Use these newly created files by defining a path to them in the ReceiverConfig and SenderConfig classes in the application. 
 
-## Setup Cassandra
+## Setting up Cassandra
 
 ### Step 1
 
@@ -28,23 +28,33 @@ Download the CA Certificate which is found on the services home page within the 
 
 ### Step 2
 
-	Login to your Aiven.io Cassandra service using the connection information on the console page. For example,
-	
+Login to your Aiven.io Cassandra service using the connection information on the console page. For example, It will be necessary to run this command from a directory that contains the SSL certificate or to provide a path to the certificate.  
+
 	SSL_CERTFILE=CA Certificate cqlsh --ssl -u avnadmin -p your_password your_host  your_port
 
 ### Step 3
 
-	After login create a KEYSPACE to use when inserting data. 
-	
+After login in step 1, create a KEYSPACE to use when inserting data. 
+
 	CREATE KEYSPACE kafka_examples WITH REPLICATION = {'class': 'NetworkTopologyStrategy', 'aiven': 3};
 
-### Compile and Package
+
+
+## Kafka Setup
+
+### Step 1
+
+Prior to running the application it will be necessary to create a topic called media.  To do this login to the Aiven.io console, click on the topics tab and add a topic with the name media. If running this code against a non-service deployment of Kafka you can run the code as is without creating a topic first.  
+
+# Compile and Package
+
+After completing the above steps you can compile and package the application.  Be sure to review the code and make all the necessary adjustments such as the IP address or hostname of the node you want to connect to for Cassandra. See the cqlSession method in the MediaWriter class.  
 
 ```
 mvn compile package
 ```
 
-## Running the Application
+# Running the Application
 
 ### Step 1  - Commands
 
@@ -101,4 +111,13 @@ You should see output similar to the following.
  video_id    | 0a29f63f-2d6c-10c5-b385-8c55d3dcc2fc
 ```
 
-If you have a question regarding this example, please let me know.  
+ 
+
+# Summary
+
+As I completed this application a few ideas came to mind.  One is creating a connector or listener for the source data so rather than using a .csv file to add produce messages there would be a listener on a source data system that automatically sends or produces messages to Kafka as new rows are inserted.  So depending on the application as records are inserted into a source system new messages are created to send to Kafka which in turn are consumed and then written to Cassandra or some other downstream data source.  
+
+
+
+ 
+
