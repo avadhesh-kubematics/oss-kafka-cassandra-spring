@@ -115,7 +115,7 @@ You should see output similar to the following.
 
 # Summary
 
-As I completed this application a few ideas came to mind.  One is creating a connector or listener for the source data so rather than using a .csv file to add produce messages there would be a listener on a source data system that automatically sends or produces messages to Kafka as new rows are inserted.  So depending on the application as records are inserted into a source system new messages are created to send to Kafka which in turn are consumed and then written to Cassandra or some other downstream data source.  
+As I completed this application a few ideas came to mind.  One is creating a connector or listener for the source data that is used to produce messages.  So, rather than using a .csv file to produce messages there would be a listener on a source data system that automatically sends or produces messages to Kafka as new rows are inserted.  Depending on the application as records are inserted into a source system new messages are created to send to Kafka which in turn are consumed and then written to Cassandra or some other downstream data source.  
 
 
 
