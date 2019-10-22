@@ -5,7 +5,6 @@ spring:
       auto-offset-reset: earliest
     # change this property if you are using your own
     # Kafka cluster or your Docker IP is different
-    bootstrap-servers: 10.1.10.48:9092
-
+    bootstrap-servers: kafka-3153b09-shoreviewanalytics-d9c3.aivencloud.com:12643
 tpd:
   topic-name: media

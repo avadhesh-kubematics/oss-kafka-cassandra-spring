@@ -1,9 +1,7 @@
 package com.shoreviewanalytics.kafka.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -13,8 +11,6 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
-import org.springframework.kafka.support.serializer.JsonSerializer;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +26,14 @@ public class ReceiverConfig {
     @Bean
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>(kafkaProperties.buildProducerProperties());
+        props.put("security.protocol", "SSL");
+        props.put("ssl.endpoint.identification.algorithm", "");
+        props.put("ssl.truststore.location", "/home/one/Downloads/kafka.service/client.truststore.jks");
+        props.put("ssl.truststore.password", "");
+        props.put("ssl.keystore.type", "PKCS12");
+        props.put("ssl.keystore.location", "/home/one/Downloads/kafka.service/client.keystore.p12");
+        props.put("ssl.keystore.password", "");
+        props.put("ssl.key.password", "");
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         return props;
     }

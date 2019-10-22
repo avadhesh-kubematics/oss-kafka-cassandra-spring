@@ -12,8 +12,11 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 /*
-to run this application use command: mvn spring-boot:run
+to run this application use command: mvn spring-boot:run or java -jar target/oss-kafka-cassandra-spring-0.0.1.jar
+
 to consume / insert records use command: curl localhost:8080/media
+
+
  */
 @SpringBootApplication
 public class OssKafkaCassandraSpringApplication {
@@ -29,7 +32,5 @@ public class OssKafkaCassandraSpringApplication {
 	public NewTopic adviceTopic() {
 		return new NewTopic(topicName, 3, (short) 1);
 	}
-
-
 
 }

@@ -1,7 +1,6 @@
 package com.shoreviewanalytics.kafka.producer;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.clients.producer.internals.Sender;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
@@ -24,6 +23,14 @@ public class SenderConfig {
     @Bean
     public Map<String, Object> producerConfigs() {
         Map<String, Object> props = new HashMap<>(kafkaProperties.buildProducerProperties());
+        props.put("security.protocol", "SSL");
+        props.put("ssl.endpoint.identification.algorithm", "");
+        props.put("ssl.truststore.location", "/home/one/Downloads/kafka.service/client.truststore.jks");
+        props.put("ssl.truststore.password", "");
+        props.put("ssl.keystore.type", "PKCS12");
+        props.put("ssl.keystore.location", "/home/one/Downloads/kafka.service/client.keystore.p12");
+        props.put("ssl.keystore.password", "");
+        props.put("ssl.key.password", "");
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         return props;
