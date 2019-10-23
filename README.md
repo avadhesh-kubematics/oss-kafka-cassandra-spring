@@ -30,6 +30,11 @@ Login to your Aiven.io Cassandra service using the connection information on the
 
 	SSL_CERTFILE=CA Certificate cqlsh --ssl -u avnadmin -p your_password your_host  your_port
 
+This following command is correct for a production system values minus the password.  
+
+```
+SSL_CERTFILE=cassandra.pem cqlsh --ssl -u avnadmin -p password cassandra-23daba12-shoreviewanalytics-d9c3.aivencloud.com 12641
+```
 ### Step 3
 
 After login in step 1, create a KEYSPACE to use when inserting data. 
@@ -84,7 +89,7 @@ Create a console.properties file with content that contains SSL configuration. F
 security.protocol=SSL
 ssl.endpoint.identification.algorithm=
 ssl.protocol=TLS
-ssl.key.password=audiovox1
+ssl.key.password=
 ssl.keystore.location=/home/kafka/Downloads/kafka.service/client.keystore.p12
 ssl.keystore.password=
 ssl.keystore.type=PKCS12
