@@ -54,6 +54,16 @@ After completing the above steps you can compile and package the application.  B
 mvn compile package
 ```
 
+# Testing
+
+There are three tests included.  The first two are standard embedded Kafka tests. The third test called sends a test message using the Media class and is called MediaTest.  The MediaTest can be run with the following command. 
+
+```
+mvn -Dtest=MediaTest test
+```
+
+Please note that the MediaTest will fail if you are pointing the application at an environment that is not available because it is using a classes from the application.  For example, the Media class. 
+
 # Running the Application
 
 ### Step 1  - Commands
