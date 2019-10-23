@@ -56,7 +56,7 @@ mvn compile package
 
 # Testing
 
-There are three tests included.  The first two are standard embedded Kafka tests. The third test called sends a test message to an embedded Kafka instance using the Media class and is called MediaTest.  The MediaTest can be run with the following command. 
+There are three tests included.  The first two are standard embedded Kafka tests. The third test sends a test message to an embedded Kafka instance using the Media class and is called MediaTest.  The MediaTest can be run with the following command. 
 
 ```
 mvn -Dtest=MediaTest test
