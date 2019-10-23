@@ -26,14 +26,14 @@ public class ReceiverConfig {
     @Bean
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>(kafkaProperties.buildProducerProperties());
-        props.put("security.protocol", "SSL");
-        props.put("ssl.endpoint.identification.algorithm", "");
-        props.put("ssl.truststore.location", "/home/one/Downloads/kafka.service/client.truststore.jks");
-        props.put("ssl.truststore.password", "");
-        props.put("ssl.keystore.type", "PKCS12");
-        props.put("ssl.keystore.location", "/home/one/Downloads/kafka.service/client.keystore.p12");
-        props.put("ssl.keystore.password", "");
-        props.put("ssl.key.password", "");
+//        props.put("security.protocol", "SSL");
+//        props.put("ssl.endpoint.identification.algorithm", "");
+//        props.put("ssl.truststore.location", "/home/one/Downloads/kafka.service/client.truststore.jks");
+//        props.put("ssl.truststore.password", "");
+//        props.put("ssl.keystore.type", "PKCS12");
+//        props.put("ssl.keystore.location", "/home/one/Downloads/kafka.service/client.keystore.p12");
+//        props.put("ssl.keystore.password", "");
+//        props.put("ssl.key.password", "");
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         return props;
     }

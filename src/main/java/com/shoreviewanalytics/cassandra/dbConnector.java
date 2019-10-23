@@ -18,7 +18,7 @@ public class dbConnector {
         InputStream fis = null;
         X509Certificate caCert;
         try {
-            fis = dbConnector.class.getResourceAsStream("/cassandra.pem");
+            fis = dbConnector.class.getResourceAsStream("/myca.pem");
             caCert = (X509Certificate) cf.generateCertificate(fis);
         } finally {
             if (fis != null) {
@@ -41,8 +41,8 @@ public class dbConnector {
 
     public void connect(String node, Integer port, String dataCenter) throws Exception {
 
-        String username = "avnadmin";
-        String password = "pqyk78fykq2ojox4";
+        String username = "cassandra";
+        String password = "cassandra";
         CqlSessionBuilder builder = CqlSession.builder();
         builder.withAuthCredentials(username,password);
         builder.withSslContext(loadCaCert());

@@ -29,13 +29,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.StreamSupport;
 
-@RestController
 /**
  * Description: This class allows the user to use a curl command to initiate a producer that writes messages to Kafka.
  * It then consumes the messages and writes them at the same time to Cassandra. The inspiration to use this approach was inspired by
  * https://thepracticaldeveloper.com/2018/11/24/spring-boot-kafka-config/#Spring_Boot_and_Kafka_Practical_Configuration_Examples.
  *
  */
+@RestController
 public class Controller {
 
     private static final Logger logger =
@@ -95,27 +95,7 @@ public class Controller {
         return "Thanks for sending us your favorite media!";
     }
 
-    @KafkaListener
-            /*
-            Annotation that marks a method to be the target of a Kafka message listener on the specified topics.
-            The containerFactory() identifies a KafkaListenerContainerFactory to use to build the Kafka listener container.
-            If not set, a default container factory is assumed to be available with a bean name of kafkaListenerContainerFactory
-            unless an explicit default has been provided through configuration.
-
-            Processing of @KafkaListener annotations is performed by registering a KafkaListenerAnnotationBeanPostProcessor. This can be done manually or, more conveniently, through EnableKafka annotation.
-
-            Annotated methods are allowed to have flexible signatures similar to what MessageMapping provides, that is
-
-                ConsumerRecord to access to the raw Kafka message
-                Acknowledgment to manually ack
-                @Payload-annotated method arguments including the support of validation
-                @Header-annotated method arguments to extract a specific header value, defined by KafkaHeaders
-                @Headers-annotated argument that must also be assignable to Map for getting access to all headers.
-                MessageHeaders arguments for getting access to all headers.
-                MessageHeaderAccessor for convenient access to all method arguments.
-
-             */
-            (topics = "media", clientIdPrefix = "media-json",
+    @KafkaListener(topics = "media", clientIdPrefix = "media-json",
             containerFactory = "kafkaListenerContainerFactory")
     public void listenAsObject(ConsumerRecord<String, Object> cr,
                                @Payload Media payload) throws Exception {

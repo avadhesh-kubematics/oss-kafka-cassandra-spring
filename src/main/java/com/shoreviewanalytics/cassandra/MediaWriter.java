@@ -57,8 +57,14 @@ public class MediaWriter {
 
     public CqlSession cqlSession() throws Exception {
         dbConnector connector = new dbConnector();
-        connector.connect("cassandra-23daba12-shoreviewanalytics-d9c3.aivencloud.com", 12641, "aiven");
-        //connector.connect("10.1.10.61", 9042, "dc1");
+        /*
+        use this if using Aiven.io and service is running
+         */
+        //connector.connect("cassandra-23daba12-shoreviewanalytics-d9c3.aivencloud.com", 12641, "aiven");
+        /*
+        use this for local or if not using Aiven.io service
+         */
+        connector.connect("10.1.10.60", 9042, "dc1");
         CqlSession session = connector.getSession();
         return session;
     }
