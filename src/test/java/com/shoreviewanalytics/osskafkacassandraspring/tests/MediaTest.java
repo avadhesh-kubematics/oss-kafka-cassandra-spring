@@ -34,6 +34,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  * MediaTest
  * Description: A test class to test the ability to use the Media class to send and receive messages.
  * To Run: mvn -Dtest=MediaTest test
+ * Note: A valid production configuration is necessary for this test class to run successfully.  For example,
+ * because this test class contains a reference to the Sender class in the /src/main/.. when this test runs it ensures
+ * that the overall application is configured as expected.  Therefore, when this test runs it ensures that Cassandra is
+ * available as well as Kafka.
  */
 
 /*

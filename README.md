@@ -49,14 +49,6 @@ After login in step 1, create a KEYSPACE to use when inserting data.
 
 Prior to running the application it will be necessary to create a topic called media.  To do this login to the Aiven.io console, click on the topics tab and add a topic with the name media. If running this code against a non-service deployment of Kafka you can run the code as is without creating a topic first.  
 
-# Compile and Package
-
-After completing the above steps you can compile and package the application.  Be sure to review the code and make all the necessary adjustments such as the IP address or hostname of the node you want to connect to for Cassandra. See the cqlSession method in the MediaWriter class.  
-
-```
-mvn compile package
-```
-
 # Testing
 
 There are three tests included.  The first two are standard embedded Kafka tests. The third test sends a test message to an embedded Kafka instance using the Media class and is called MediaTest.  The MediaTest can be run with the following command. 
@@ -66,6 +58,14 @@ mvn -Dtest=MediaTest test
 ```
 
 Please note that the MediaTest will fail if you are pointing the application at an environment that is not available because it is using classes from the application, which means the test will ensure the overall application is working as expected.  For example, because the application expects Cassandra it fails if it is unable to reach a running cluster that is accessible based on the current configuration of the application.     
+
+# Compile and Package
+
+After completing the above steps you can compile and package the application.  Be sure to review the code and make all the necessary adjustments such as the IP address or hostname of the node you want to connect to for Cassandra. See the cqlSession method in the MediaWriter class.  
+
+```
+mvn compile package
+```
 
 # Running the Application
 
