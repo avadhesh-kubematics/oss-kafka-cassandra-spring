@@ -8,8 +8,6 @@ In order to run this application, it will be necessary to have a Kafka single or
 
 It will be necessary to recompile the project adding your specific environment values. For example, the dbConnector class has a connect() method where you pass in values specific to your environment such as the IP address of your data source.
 
-
-
 ## Setting up Kafka SSL
 
 You can use the following commands to create the client.truststore and the client.keystore that allow for a connection to Kafka using SSL. You will be asked to create a password that can be used within the application and later to check messages.  
