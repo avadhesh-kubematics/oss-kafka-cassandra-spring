@@ -4,7 +4,7 @@ This application demonstrates how to use Spring Kafka to create a producer and c
 
 ### Prerequisites:
 
-In order to run this application, it will be necessary to have a Kafka single or multi-node cluster as well as Cassandra single node or multi-node cluster with SSL enabled. It is possible to run without SSL, but it will be necessary to remove or comment out, the SSL configuration throughout the application. The source code uses a .pem file to access a Cassandra cluster using SSL. It also uses a client.truststore and a client.keystore to when accessing an SSL enabled Kafka cluster. 
+In order to run this application, it will be necessary to have a Kafka single or multi-node cluster as well as Cassandra  multi-node cluster with SSL enabled. It is possible to run this application without SSL, but it will be necessary to remove or comment out, the SSL configuration throughout the application and in turn use a Cassandra cluster that is not SSL enabled. The source code uses a .pem file to access a Cassandra cluster using SSL. It also uses a client.truststore and a client.keystore to when accessing an SSL enabled Kafka cluster when connection to Aiven.io Kafka service. 
 
 It will be necessary to recompile the project adding your specific environment values. For example, the dbConnector class has a connect() method where you pass in values specific to your environment such as the IP address of your data source.
 
