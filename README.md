@@ -12,7 +12,7 @@ It will be necessary to recompile the project adding your specific environment v
 
 ## Setting up Kafka SSL
 
-You can use the following commands to create the client.truststore and the client.keystore that allow for a connection to Kafka using SSL. 
+You can use the following commands to create the client.truststore and the client.keystore that allow for a connection to Kafka using SSL. You will be asked to create a password that can be used within the application and later to check messages.  
 
 	openssl pkcs12 -export -inkey service.key -in service.cert -out client.keystore.p12 -name service_key
 	
@@ -80,11 +80,28 @@ curl localhost:8080/media
 
 ### Step 3 - Check Messages
 
+Create a console.properties file with content that contains SSL configuration. For example, you will need the path to client.keystore and client.truststore created earlier as well as passwords. 
+
+```
+security.protocol=SSL
+ssl.endpoint.identification.algorithm=
+ssl.protocol=TLS
+ssl.key.password=audiovox1
+ssl.keystore.location=/home/kafka/Downloads/kafka.service/client.keystore.p12
+ssl.keystore.password=
+ssl.keystore.type=PKCS12
+ssl.truststore.location=/home/kafka/Downloads/kafka.service/client.truststore.jks
+ssl.truststore.password=
+ssl.truststore.type=JKS
+```
+
+Use the console.properties file along with following command from a server or workstation where you have Kafka installed.  
+
 ```
 kafka-console-consumer.sh --bootstrap-server kafka-3153b09-shoreviewanalytics-d9c3.aivencloud.com:12643 --topic media --consumer.config console.properties --from-beginning
 ```
 
-You should see output similar to the following and pressing CTRL,C
+You should see output similar to the following after running the above command. 
 
 ```
 {"title":"Grumpy Cat Outside Playing","added_year":"2015","added_date":"2015-03-01 08:00:00+0000","description":"Grumpy Cat was chewing on the drip irrigation line. New Tshirts at: http://www.tshirtoutlet.com/nsearch.html?query=grumpy+cat.","userid":"c26c353b-a076-457a-a450-e7029eeb0eb6","videoid":"15633b12-af9d-1eb3-a4bd-18a64d16704b"}
