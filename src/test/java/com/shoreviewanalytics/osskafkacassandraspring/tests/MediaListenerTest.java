@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * MediaListenerTest
- * Description: A test class to test this listener for media messages without a write to Cassandra.
+ * Description: A test class to test the listener that listens for new media messages without a write to Cassandra.
  * To Run: mvn -Dtest=MediaListenerTest test
  */
 
