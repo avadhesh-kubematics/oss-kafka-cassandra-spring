@@ -4,6 +4,7 @@ import com.datastax.oss.driver.api.core.CqlSession;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoreviewanalytics.cassandra.MediaWriter;
+import com.shoreviewanalytics.config.AppConfig;
 import com.shoreviewanalytics.kafka.domain.Media;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -14,6 +15,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.Headers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -45,24 +47,30 @@ public class Controller {
     private final String topicName;
     private CountDownLatch latch;
     private final ObjectMapper objectMapper;
-    private final MediaWriter mediaWriter;
-    private final CqlSession session;
+    private MediaWriter mediaWriter;
+    private CqlSession session;
+    @Autowired
+    AppConfig config;
 
     public Controller(
             final KafkaTemplate<String, Object> template,
             @Value("${tpd.topic-name}") final String topicName ) throws Exception {
-        this.template = template;
-        this.topicName = topicName;
-        objectMapper = new ObjectMapper();
-        mediaWriter = new MediaWriter();
-        session = mediaWriter.cqlSession();
+            this.template = template;
+            this.topicName = topicName;
+            objectMapper = new ObjectMapper();
+
 
     }
+
+
 
     @GetMapping("/media")
     public String media() throws Exception {
 
         latch = new CountDownLatch(1);
+        mediaWriter = new MediaWriter();
+        session = mediaWriter.cqlSession(config.getNode(),config.getPort(),config.getDatacenter(),config.getUsername(),config.getPassword());
+
 
         try (
                 InputStream is = Controller.class.getResourceAsStream("/media_by_title_year.csv");
@@ -84,7 +92,7 @@ public class Controller {
 
                 this.template.send(new ProducerRecord<>(topicName, media));
 
-                //logger.info(line);
+
 
             }
         } catch (IOException e) {
@@ -95,11 +103,11 @@ public class Controller {
         return "Thanks for sending us your favorite media!";
     }
 
+
     @KafkaListener(topics = "media", clientIdPrefix = "media-json",
             containerFactory = "kafkaListenerContainerFactory")
     public void listenAsObject(ConsumerRecord<String, Object> cr,
                                @Payload Media payload) throws Exception {
-
 
         // Serialize each message as json to use previously written insert logic
 
@@ -107,7 +115,7 @@ public class Controller {
 
         // Insert the json formatted message
 
-        mediaWriter.WriteToCassandra(serializeForInsert,session);
+        mediaWriter.WriteToCassandra(serializeForInsert, session);
 
         latch.countDown();
     }

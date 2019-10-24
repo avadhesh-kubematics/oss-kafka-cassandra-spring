@@ -1,16 +1,21 @@
+cassandra:
+  node: 10.1.10.60
+  port: 9042
+  username: cassandra
+  password: cassandra
+  datacenter: dc1
 # this file is needed to run tests using the command: mvn test
+# it's also necessary to equate to production when running tests or compiling if testing
+# involves using classes from production
 spring:
   kafka:
     consumer:
-      group-id: tpd-loggers
+      group-id: media
       auto-offset-reset: earliest
     # change this property if you are using your own
     # Kafka cluster or your Docker IP is different
     bootstrap-servers: ${spring.embedded.kafka.brokers}
-
 tpd:
   topic-name: media
 
-topic:
-  receiver: receiver.t
 

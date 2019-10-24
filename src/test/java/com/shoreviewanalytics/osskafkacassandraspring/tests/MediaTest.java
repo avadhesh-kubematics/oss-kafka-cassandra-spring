@@ -61,7 +61,7 @@ public class MediaTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MediaTest.class);
     @Autowired
     /*
-    Use the Sender class from the application code to send a test message to Kafka.
+    Use the Sender class from the application code to send a test message using embedded Kafka.
      */
     private com.shoreviewanalytics.kafka.producer.Sender sender;
 
@@ -180,8 +180,6 @@ public class MediaTest {
         assertThat(testMediaRecord).isNotNull();
 
         assertThat(testMediaRecord.value().toString()).isEqualTo(objectMapper.valueToTree(media).toString());
-
-
 
     }
 

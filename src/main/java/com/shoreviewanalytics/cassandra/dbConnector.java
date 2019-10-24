@@ -2,6 +2,10 @@ package com.shoreviewanalytics.cassandra;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.CqlSessionBuilder;
+import com.shoreviewanalytics.config.AppConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
@@ -11,7 +15,17 @@ import java.security.KeyStore;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
+@Configuration
 public class dbConnector {
+
+    @Autowired
+    AppConfig config;
+
+    private String node;
+    private Integer port;
+    private String datacenter;
+    private String username;
+    private String password;
 
     private static SSLContext loadCaCert() throws Exception {
         CertificateFactory cf = CertificateFactory.getInstance("X.509");
@@ -39,20 +53,18 @@ public class dbConnector {
 
     private CqlSession session;
 
-    public void connect(String node, Integer port, String dataCenter) throws Exception {
+    void connect(String node, Integer port, String datacenter, String username, String password) throws Exception {
 
-        String username = "cassandra";
-        String password = "cassandra";
         CqlSessionBuilder builder = CqlSession.builder();
         builder.withAuthCredentials(username,password);
         builder.withSslContext(loadCaCert());
         builder.addContactPoint(new InetSocketAddress(node, port));
-        builder.withLocalDatacenter(dataCenter);
+        builder.withLocalDatacenter(datacenter);
         builder.withKeyspace("KAFKA_EXAMPLES");
         session = builder.build();
     }
 
-    public CqlSession getSession() {
+    CqlSession getSession() {
         return this.session;
     }
 

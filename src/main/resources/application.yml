@@ -1,10 +1,18 @@
+cassandra:
+  node: 10.1.10.60
+  port: 9042
+  username: cassandra
+  password: cassandra
+  datacenter: dc1
 spring:
-  kafka:
+ kafka:
     consumer:
       group-id: media
       auto-offset-reset: earliest
     # change this property if you are using your own
     # Kafka cluster or your Docker IP is different
-    bootstrap-servers: kafka-3153b09-shoreviewanalytics-d9c3.aivencloud.com:12643
+    # bootstrap-servers: kafka-3153b09-shoreviewanalytics-d9c3.aivencloud.com:12643
+    bootstrap-servers: 10.1.10.48:9092
+
 tpd:
   topic-name: media

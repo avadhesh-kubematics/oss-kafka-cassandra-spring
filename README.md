@@ -57,7 +57,7 @@ There are three tests included.  The first two are standard embedded Kafka tests
 mvn -Dtest=MediaTest test
 ```
 
-Please note that the MediaTest will fail if you are pointing the application at an environment that is not available because it is using classes from the application, which means the test will ensure the overall application is working as expected.  For example, because the application expects Cassandra it fails if it is unable to reach a running cluster that is accessible based on the current configuration of the application.     
+Please note that the MediaTest will fail if you are pointing the application at an environment that is not available because it is using classes from the application, which means the test will ensure the overall application is working as expected.  For example, because the application expects Cassandra it fails if it is unable to reach a running cluster that is accessible based on the current configuration of the application.    
 
 # Compile and Package
 
