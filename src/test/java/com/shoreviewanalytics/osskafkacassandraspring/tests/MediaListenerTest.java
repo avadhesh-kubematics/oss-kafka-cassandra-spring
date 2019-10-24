@@ -35,7 +35,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MediaListenerTest {
 
     @ClassRule
-    public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(1, true, "media");
+    public static EmbeddedKafkaRule embeddedKafka =
+            new EmbeddedKafkaRule(1, true, "media");
     @Autowired
     private KafkaListenerEndpointRegistry registry;
 
@@ -56,7 +57,8 @@ public class MediaListenerTest {
                 .getListenerContainer("media-01-test");
         container.stop();
         @SuppressWarnings("unchecked")
-        AcknowledgingConsumerAwareMessageListener<String, Object> messageListener = (AcknowledgingConsumerAwareMessageListener<String, Object>) container
+        AcknowledgingConsumerAwareMessageListener<String, Object> messageListener =
+                (AcknowledgingConsumerAwareMessageListener<String, Object>) container
                 .getContainerProperties().getMessageListener();
         CountDownLatch latch = new CountDownLatch(1);
         container.getContainerProperties()
