@@ -49,6 +49,7 @@ public class Controller {
     private final ObjectMapper objectMapper;
     private MediaWriter mediaWriter;
     private CqlSession session;
+
     @Autowired
     AppConfig config;
 
@@ -58,19 +59,21 @@ public class Controller {
             this.template = template;
             this.topicName = topicName;
             objectMapper = new ObjectMapper();
-
-
     }
-
-
 
     @GetMapping("/media")
     public String media() throws Exception {
 
         latch = new CountDownLatch(1);
+        // setup media writer Cassandra session, prior to sending messages
         mediaWriter = new MediaWriter();
-        session = mediaWriter.cqlSession(config.getNode(),config.getPort(),config.getDatacenter(),config.getUsername(),config.getPassword());
 
+        session = mediaWriter.cqlSession(
+                config.getNode(),
+                config.getPort(),
+                config.getDatacenter(),
+                config.getUsername(),
+                config.getPassword());
 
         try (
                 InputStream is = Controller.class.getResourceAsStream("/media_by_title_year.csv");
@@ -80,7 +83,6 @@ public class Controller {
         ) {
             for (CSVRecord csvRecord : csvParser) {
                 // Accessing Values by Column Index
-
                 String line = csvRecord.get(0) + "," + csvRecord.get(1) + "," + csvRecord.get(2) + "," + csvRecord.get(3) + "," + csvRecord.get(4) + "," + csvRecord.get(5);
                 Media media = new Media();
                 media.setTitle(csvRecord.get(0));
@@ -104,10 +106,8 @@ public class Controller {
     }
 
 
-    @KafkaListener(topics = "media", clientIdPrefix = "media-json",
-            containerFactory = "kafkaListenerContainerFactory")
-    public void listenAsObject(ConsumerRecord<String, Object> cr,
-                               @Payload Media payload) throws Exception {
+    @KafkaListener(id = "media-01", topics = "media", clientIdPrefix = "media-json",containerFactory = "kafkaListenerContainerFactory")
+    public void listenAsObject(ConsumerRecord<String, Object> cr,@Payload Media payload) throws Exception {
 
         // Serialize each message as json to use previously written insert logic
 
@@ -118,6 +118,10 @@ public class Controller {
         mediaWriter.WriteToCassandra(serializeForInsert, session);
 
         latch.countDown();
+    }
+
+    @KafkaListener(id = "media-01-test", topics = "media", clientIdPrefix = "media-json",containerFactory = "kafkaListenerContainerFactory")
+    public void listenAsObjectTest(ConsumerRecord<String, Object> cr,@Payload Media payload) throws Exception {
     }
 
     private static String typeIdHeader(Headers headers) {
