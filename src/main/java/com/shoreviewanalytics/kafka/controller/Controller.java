@@ -37,6 +37,11 @@ import java.util.stream.StreamSupport;
  * https://thepracticaldeveloper.com/2018/11/24/spring-boot-kafka-config/#Spring_Boot_and_Kafka_Practical_Configuration_Examples.
  *
  */
+/*
+@RestController is used for creating restful controllers, which do not use a view technology.
+The methods typically return XML, JSON, or plain text.
+https://www.baeldung.com/spring-new-requestmapping-shortcuts
+ */
 @RestController
 public class Controller {
 
@@ -60,7 +65,10 @@ public class Controller {
             this.topicName = topicName;
             objectMapper = new ObjectMapper();
     }
-
+    /*
+    http://zetcode.com/spring/getmapping/
+    https://www.baeldung.com/spring-new-requestmapping-shortcuts
+     */
     @GetMapping("/media")
     public String media() throws Exception {
 
@@ -94,8 +102,6 @@ public class Controller {
 
                 this.template.send(new ProducerRecord<>(topicName, media));
 
-
-
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,7 +126,7 @@ public class Controller {
         latch.countDown();
     }
 
-    @KafkaListener(id = "media-01-test", topics = "media", clientIdPrefix = "media-json",containerFactory = "kafkaListenerContainerFactory")
+    @KafkaListener(id = "media-01-test", topics = "test_media", clientIdPrefix = "media-json-test",containerFactory = "kafkaListenerContainerFactory")
     public void listenAsObjectTest(ConsumerRecord<String, Object> cr,@Payload Media payload) throws Exception {
     }
 

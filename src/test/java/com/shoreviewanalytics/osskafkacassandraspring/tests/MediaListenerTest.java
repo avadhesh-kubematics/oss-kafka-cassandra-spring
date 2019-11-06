@@ -38,7 +38,7 @@ public class MediaListenerTest {
 
     @ClassRule
     public static EmbeddedKafkaRule embeddedKafka =
-            new EmbeddedKafkaRule(1, true, "media");
+            new EmbeddedKafkaRule(1, true, "test_media");
     @Autowired
     private KafkaListenerEndpointRegistry registry;
 
@@ -95,7 +95,7 @@ public class MediaListenerTest {
 
         System.out.println("the media message content is " + media_message.toString());
 
-        template.send("media", media_message);
+        template.send("test_media", media_message);
 
         ConsumerRecord<String, Object> received = records.poll(10, TimeUnit.SECONDS);
 

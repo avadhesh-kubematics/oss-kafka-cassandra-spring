@@ -3,7 +3,9 @@ package com.shoreviewanalytics.kafka.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.StringTokenizer;
-
+/*
+immutable class with @JsonProperty annotations in the constructor parameters so Jackson can deserialize it properly
+ */
 public class Media {
     private String title;
     private String added_year;

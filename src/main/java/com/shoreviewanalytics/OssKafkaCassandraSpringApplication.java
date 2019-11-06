@@ -27,7 +27,9 @@ public class OssKafkaCassandraSpringApplication {
 
 	@Value("${tpd.topic-name}")
 	private String topicName;
-
+	/*
+	create a new topic called ... topicName, with 3 partitions and a replication factor of 1
+	 */
 	@Bean
 	public NewTopic adviceTopic() {
 		return new NewTopic(topicName, 3, (short) 1);
