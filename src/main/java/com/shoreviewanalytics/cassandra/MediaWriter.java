@@ -2,10 +2,8 @@ package com.shoreviewanalytics.cassandra;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.shoreviewanalytics.config.AppConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -27,7 +25,12 @@ public class MediaWriter {
     }
 
 
-    public CqlSession cqlSession(String node, Integer port, String datacenter, String username, String password) throws Exception {
+    public CqlSession cqlSession(
+                                String node,
+                                Integer port,
+                                String datacenter,
+                                String username,
+                                String password) throws Exception {
 
         try {
             dbConnector connector = new dbConnector();

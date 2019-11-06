@@ -13,7 +13,11 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/*
+@Configuration indicates that the class can
+be used by the Spring IoC container as a source of
+bean definitions.
+*/
 @Configuration
 public class SenderConfig {
 
@@ -43,8 +47,8 @@ public class SenderConfig {
 
     @Bean
     public KafkaTemplate<String, Object> kafkaTemplate() {
-
         return new KafkaTemplate<>(producerFactory());
     }
+
 
 }

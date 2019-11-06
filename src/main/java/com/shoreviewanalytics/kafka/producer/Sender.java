@@ -1,7 +1,6 @@
 package com.shoreviewanalytics.kafka.producer;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ public class Sender {
     public Sender(KafkaTemplate<String, Object> template) {
         this.template = template;
     }
-
 
     public void send(String topic, Object data) {
         LOGGER.info("sending data='{}' to topic='{}'", data, topic);

@@ -21,11 +21,6 @@ public class dbConnector {
     @Autowired
     AppConfig config;
 
-    private String node;
-    private Integer port;
-    private String datacenter;
-    private String username;
-    private String password;
 
     private static SSLContext loadCaCert() throws Exception {
         CertificateFactory cf = CertificateFactory.getInstance("X.509");

@@ -3,6 +3,8 @@ package com.shoreviewanalytics.osskafkacassandraspring.tests;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.junit.ClassRule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -13,6 +15,8 @@ import org.springframework.kafka.listener.MessageListener;
 import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
 import org.springframework.kafka.test.utils.ContainerTestUtils;
 import org.springframework.kafka.test.utils.KafkaTestUtils;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -22,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.springframework.kafka.test.hamcrest.KafkaMatchers.*;
 /*
-to run use: mvn -Dtest=EmbeddedKafkaTest1 test
+to run use: mvn -Dtest=EmbeddedKafkaTest test
  */
 
 /**
@@ -35,7 +39,10 @@ to run use: mvn -Dtest=EmbeddedKafkaTest1 test
  * passed into KafkaTemplate kafkaTemplate.  kafkaTemplate is used to send test messages that are in turn consumed by ConsumeRecord
  * received.
  */
-public class EmbeddedKafkaTest1 {
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@DirtiesContext
+public class EmbeddedKafkaTest {
     private static final String TEMPLATE_TOPIC = "templateTopic";
 
     @ClassRule
@@ -46,19 +53,23 @@ public class EmbeddedKafkaTest1 {
     and finally the rule's after() method. So if you have five test methods in a class, before() and after() will only get run once each.
 
     @ClassRule applies to a static method, and so has all the limitations inherent in that. A @Rule causes tests to be run via the rule's apply() method,
-    which can do things before and after the target method is run. If you have five test methods, the rule's apply() is called five times, as a wrapper around each method.
+    which can do things before and after the target method is run. If you have five test methods, the rule's apply() is called five times,
+    as a wrapper around each method.
 
     Use @ClassRule to set up something that can be reused by all the test methods,
     if you can achieve that in a static method.
 
     Use @Rule to set up something that needs to be created new, or reset, for each test method.
      */
+    /*
+    EmbeddedKafkaRule - an embedded Kafka Broker(s) and Zookeeper manager. This class is intended to be used in the unit tests.
+     */
     public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(1, true, TEMPLATE_TOPIC);
 
     @Test
     /*
     http://junit.sourceforge.net/javadoc/org/junit/Test.html
-    The Test annotation tells JUnit that the public void method to which it is attached can be run as a test case. To run the method,
+    The @Test annotation tells JUnit that the public void method to which it is attached can be run as a test case. To run the method,
     JUnit first constructs a fresh instance of the class then invokes the annotated method. Any exceptions thrown by the test will be
     reported by JUnit as a failure. If no exceptions are thrown, the test is assumed to have succeeded.
     */

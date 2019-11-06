@@ -43,8 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 /*
 To have the correct broker address set on the Sender and Receiver beans during each test case,
 we need to use the @DirtiesContext on all test classes. The reason for this is that each test case contains its own embedded Kafka broker
-that will each be created on a new random port.
-By rebuilding the application context, the beans will always be set with the current broker address.
+that will each be created on a new random port. By rebuilding the application context, the beans will always be set with the current broker address.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest

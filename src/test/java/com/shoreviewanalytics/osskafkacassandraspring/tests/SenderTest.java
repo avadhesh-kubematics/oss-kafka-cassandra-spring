@@ -28,15 +28,15 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /*
-This is a slightly modified example of how to do embedded kafka testing.  Source: https://codenotfound.com/spring-kafka-embedded-unit-test-example.html
-to run use: mvn -Dtest=EmbeddedKafkaTest2 test
+The test uses the Sender class to send a test message to an embedded kafka instance.  Info: https://codenotfound.com/spring-kafka-embedded-unit-test-example.html
+to run use: mvn -Dtest=SenderTest test
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @DirtiesContext
-public class EmbeddedKafkaTest2 {
+public class SenderTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedKafkaTest2.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SenderTest.class);
     private static String SENDER_TOPIC = "sender.t";
     @Autowired
     private com.shoreviewanalytics.kafka.producer.Sender sender;
@@ -46,12 +46,13 @@ public class EmbeddedKafkaTest2 {
     @ClassRule
     /*
     spring-kafka-test includes an embedded Kafka broker that can be created via a JUnit @ClassRule annotation. The rule will start a
-    ZooKeeper and Kafka server instance on a random port before all the test cases are run, and stops the instances once the test cases are finished.
+    ZooKeeper and Kafka server instance on a random port before all the test cases are run, and stops the instances once the
+    test cases are finished.
+
     The EmbeddedKafkaRule constructor takes as parameters: the number of Kafka servers to start,
     whether a controlled shutdown is needed and the topics that need to be created on the server.
      */
-    public static EmbeddedKafkaRule embeddedKafka =
-            new EmbeddedKafkaRule(1, true, SENDER_TOPIC);
+    public static EmbeddedKafkaRule embeddedKafka = new EmbeddedKafkaRule(1, true, SENDER_TOPIC);
 
     @Before
     public void setUp() throws Exception {
@@ -78,10 +79,9 @@ public class EmbeddedKafkaTest2 {
 
         // create a Kafka MessageListenerContainer
 
-        container = new KafkaMessageListenerContainer<>(consumerFactory,
-                containerProperties);
+        container = new KafkaMessageListenerContainer<>(consumerFactory,containerProperties);
 
-        // create a thread safe queue to store the received message
+        // create a thread safe queue to store the received messages
          /*
         Received messages need to be stored somewhere. In this example, a thread-safe BlockingQueue is used.
         We create a new MessageListener and in the onMessage() method we add the received message to the BlockingQueue.
@@ -94,8 +94,7 @@ public class EmbeddedKafkaTest2 {
                     @Override
                     public void onMessage(
                             ConsumerRecord<String, Object> record) {
-                        LOGGER.debug("test-listener received message='{}'",
-                                record.toString());
+                        LOGGER.debug("test-listener received message='{}'",record.toString());
                         records.add(record);
                     }
                 });

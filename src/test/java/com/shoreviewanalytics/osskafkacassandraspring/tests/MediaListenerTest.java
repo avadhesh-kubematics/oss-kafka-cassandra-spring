@@ -16,6 +16,7 @@ import org.springframework.kafka.listener.AcknowledgingConsumerAwareMessageListe
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.test.rule.EmbeddedKafkaRule;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.BlockingQueue;
@@ -32,6 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext
 public class MediaListenerTest {
 
     @ClassRule
@@ -55,12 +57,16 @@ public class MediaListenerTest {
 
         ConcurrentMessageListenerContainer<?, ?> container = (ConcurrentMessageListenerContainer<?, ?>) registry
                 .getListenerContainer("media-01-test");
+
         container.stop();
         @SuppressWarnings("unchecked")
+
         AcknowledgingConsumerAwareMessageListener<String, Object> messageListener =
                 (AcknowledgingConsumerAwareMessageListener<String, Object>) container
                 .getContainerProperties().getMessageListener();
+
         CountDownLatch latch = new CountDownLatch(1);
+
         container.getContainerProperties()
                 .setMessageListener(new AcknowledgingConsumerAwareMessageListener<String, Object>() {
 
@@ -69,11 +75,7 @@ public class MediaListenerTest {
                                           Consumer<?, ?> consumer) {
 
                         records.add(data);
-
                         messageListener.onMessage(data, acknowledgment, consumer);
-
-
-
                         latch.countDown();
                     }
 

@@ -28,16 +28,6 @@ public class Media {
         this.videoid = videoid;
     }
 
-//    void parseString(String csvStr){
-//        StringTokenizer st = new StringTokenizer(csvStr,",");
-//        title = st.nextToken();
-//        added_year = st.nextToken();
-//        added_date = st.nextToken();
-//        description = st.nextToken();
-//        userid = st.nextToken();
-//        videoid = st.nextToken();
-//
-//    }
     public String getTitle() {
         return title;
     }
